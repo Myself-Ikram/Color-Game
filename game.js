@@ -3,6 +3,7 @@ var gamePattern = [];
 var userClickedPattern = [];
 var level = 0;
 var started = false;
+//For starting the game
 $(document).keydown(function(){
     if(!started){
         $("#level-title").text("Level " + level );
@@ -10,6 +11,7 @@ $(document).keydown(function(){
         started = true;
     }
 });
+//User Input is identified and stored
 $(".btn").click(function(){
     var userChosenColor = $(this).attr("id");
         userClickedPattern.push(userChosenColor);
@@ -17,6 +19,7 @@ $(".btn").click(function(){
         animatePress(userChosenColor);
         checkAnswer(userClickedPattern.length-1);
 });
+//Random colors are picked
 function nextSequence(){
     userClickedPattern = [] ;
     level++;
@@ -27,16 +30,19 @@ function nextSequence(){
     $("#" + randomChosenColor).fadeIn(100).fadeOut(100).fadeIn(100);
     playSound(randomChosenColor);    
 }
+//For playing sounds
 function playSound(name){
     var audio = new Audio("sounds/" + name + ".mp3");
     audio.play();
 }
+//Animating the button press
 function animatePress(currentColor){
     $("." + currentColor).addClass("pressed");
     setTimeout(function(){
         $("." + currentColor).removeClass("pressed");
     },100);
 }
+//For Checkking the checking the aanswer
 function checkAnswer(currentLevel){
     if(gamePattern[currentLevel] === userClickedPattern[currentLevel]){
         //console.log("Success");
@@ -57,6 +63,7 @@ function checkAnswer(currentLevel){
             startOver();
     }
 }   
+//When input is wrong the game is restarted
 function startOver(){
     level = 0;
     gamePattern = [];
